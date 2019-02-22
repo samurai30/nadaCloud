@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/scss/app.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+
+    {% block navbar %}
+        <nav class="purple darken-1">
+        <div class="nav-wrapper">
+            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large white-text"><i class="material-icons">menu</i></a>
+            <div class="right-align">
+                <a class="btn-floating btn-large waves-effect waves-light deep-purple accent-1"><i class="material-icons">person</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light deep-purple accent-3 modal-trigger" data-target="modal1"  href="#modal1"><i class="material-icons">person_add</i></a>
+
+            </div>
+        </div>
+        </nav>
+
+
+        <ul id="slide-out" class="sidenav">
+            <li><div class="user-view">
+                    <div class="background purple lighten-1">
+                        <img src="">
+                    </div>
+                    <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+                    <a href="#name"><span class="white-text name">John Doe</span></a>
+                    <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                </div></li>
+            <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+            <li><a href="#!">Second Link</a></li>
+            <li><div class="divider"></div></li>
+            <li><a class="subheader">Subheader</a></li>
+            <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+        </ul>
+
+    {% endblock %}
+        {% block body %}
+                <div class="container purple lighten-5">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator responsive-img" src="{{ asset('images/p1.jpg') }}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+                            <p><a href="#">This is a link</a></p>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator responsive-img" src="{{ asset('images/p1.jpg') }}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+                            <p><a href="#">This is a link</a></p>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                        </div>
+                    </div>
+                </div>
+
+        {% endblock %}
+
+        {% block modal %}
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                                    <label for="first_name">First Name</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input id="last_name" type="text" class="validate">
+                                    <label for="last_name">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input disabled value="I am not editable" id="disabled" type="text" class="validate">
+                                    <label for="disabled">Disabled</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="password" type="password" class="validate">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="email" type="email" class="validate">
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12">
+                                    This is an inline input field:
+                                    <div class="input-field inline">
+                                        <input id="email_inline" type="email" class="validate">
+                                        <label for="email_inline">Email</label>
+                                        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('build/app.js') }}"></script>
+
+            <script>
+                $(document).ready(function () {
+                    $('.modal').modal();
+                    $('.sidenav').sidenav();
+                });
+            </script>
+        {% endblock %}
+    </body>
+</html>
