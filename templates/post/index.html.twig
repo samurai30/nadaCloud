@@ -1,0 +1,18 @@
+{{ form_start(form) }}
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title) }}
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description) }}
+<div class="file-field input-field">
+    <div class="btn">
+        <span>File</span>
+        {{ form_widget(form.Images) }}
+    </div>
+    <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="Upload one or more files">
+    </div>
+</div>
+<div class="row right">
+    <button type="submit" id="Login" name="Login" class="btn-floating btn-large"><i class="material-icons">arrow_forward</i></button>
+</div>
+{{ form_end(form) }}

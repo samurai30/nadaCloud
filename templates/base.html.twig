@@ -12,117 +12,127 @@
     <body>
 
     {% block navbar %}
-        <nav class="purple darken-1">
+        <nav class="deep-orange darken-4">
         <div class="nav-wrapper">
-            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large white-text"><i class="material-icons">menu</i></a>
-            <div class="right-align">
-                <a class="btn-floating btn-large waves-effect waves-light deep-purple accent-1"><i class="material-icons">person</i></a>
-                <a class="btn-floating btn-large waves-effect waves-light deep-purple accent-3 modal-trigger" data-target="modal1"  href="#modal1"><i class="material-icons">person_add</i></a>
+             <a class="brand-logo center" href="{{ path('default_index') }}"><i class="material-icons">camera</i>DelayGram</a>
+            {% if is_granted('ROLE_USER') %}
+                <a class="btn-floating left btn-large waves-effect show-on-large waves-light deep-orange accent-1 sidenav-trigger" data-target='slide-out' href="#"><i class="material-icons">person</i></a>
+            {% else %}
 
-            </div>
+                <a class="btn-floating right btn-large waves-effect waves-light deep-orange accent-3 modal-trigger" data-target="modal1"  href="#modal1"><i class="material-icons">person_add</i></a>
+            {% endif %}
+
+
         </div>
         </nav>
+        <div class="section">
 
+        </div>
 
+        {% if is_granted('ROLE_USER') %}
         <ul id="slide-out" class="sidenav">
             <li><div class="user-view">
-                    <div class="background purple lighten-1">
-                        <img src="">
-                    </div>
-                    <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-                    <a href="#name"><span class="white-text name">John Doe</span></a>
-                    <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-                </div></li>
-            <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-            <li><a href="#!">Second Link</a></li>
-            <li><div class="divider"></div></li>
-            <li><a class="subheader">Subheader</a></li>
-            <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-        </ul>
+                    <div class="background deep-orange lighten-1">
 
+                    </div>
+                    <a href="{{ path('User_Post',{'username': app.user.username }) }}"><img class="circle" src="{{ asset(profile_pic_path ~ app.user.profilePicPath )}}"></a>
+                   <a  href="{{ path('User_Post',{'username': app.user.username }) }}"><span class="white-text name">{{ app.user.username }}</span></a>
+                    <span class="white-text email">{{ app.user.email }}</span>
+                </div></li>
+
+
+            <li><div class="divider"></div></li>
+            <li><a class="waves-effect" href="{{ path('User_Post',{'username': app.user.username }) }}"> Your Post<i class="material-icons">arrow_forward</i></a></li>
+
+            <li><div class="divider"></div></li>
+            <li> <a class="waves-effect" href="{{ path('security_logout') }}">Logout <i class="material-icons">arrow_forward</i></a></li>
+
+        </ul>
+        {% endif %}
     {% endblock %}
         {% block body %}
-                <div class="container purple lighten-5">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator responsive-img" src="{{ asset('images/p1.jpg') }}">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            <p><a href="#">This is a link</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
+                <div class="container">
+                    <!-- modal 2 button!-->
+                    {% if is_granted('ROLE_USER') %}
+                    <div class="center-align">
+                        <a class="waves-effect orange lighten-1 lighten-3 btn-floating btn-large pulse modal-trigger" data-target="modal2"  href="#modal2"><i class="material-icons">add_circle</i></a>
                     </div>
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator responsive-img" src="{{ asset('images/p1.jpg') }}">
+                        {% for msg in app.flashes('notice') %}
+                            <div class="center-align">
+                                <div class="card-panel teal lighten-2"><p class="white-text">{{ msg }}</p></div>
+
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="section">
+                        <div class="row">
+                            <div class="col m8 s12 offset-m2">
+                                <div class="col m6 s10 offset-m3 offset-s1">
+
+                                    {{ render(controller('App\\Controller\\PostController::Posts')) }}
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                            <p><a href="#">This is a link</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
+
+
                     </div>
+
+
+
                 </div>
+
+
 
         {% endblock %}
 
         {% block modal %}
+            <!-- modal 1!-->
             <div id="modal1" class="modal">
                 <div class="modal-content">
-
                     <div class="row">
+                        <ul class="tabs">
+                            <li class="tab col s3"><a class="active" href="#login">Login</a></li>
+                            <li class="tab col s3"><a href="#register">Register</a></li>
+                        </ul>
+                    </div>
+                    <div id="login" class="col s12">
                         <form class="col s12">
                             <div class="row">
-                                <div class="input-field col s6">
-                                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-                                    <label for="first_name">First Name</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <input id="last_name" type="text" class="validate">
-                                    <label for="last_name">Last Name</label>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="input-field col s12">
-                                    <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-                                    <label for="disabled">Disabled</label>
+                                    <input placeholder="Username" id="username" type="text" name="username" required="required" class="validate">
+                                    <label for="first_name">Username</label>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="password" type="password" class="validate">
+                                    <input id="password" type="password" class="validate" name="password" required="required">
                                     <label for="password">Password</label>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input id="email" type="email" class="validate">
-                                    <label for="email">Email</label>
-                                </div>
+                            <div class="row right">
+                                <button id="Login" name="Login" class="btn-floating btn-large"><i class="material-icons">arrow_forward</i></button>
                             </div>
-                            <div class="row">
-                                <div class="col s12">
-                                    This is an inline input field:
-                                    <div class="input-field inline">
-                                        <input id="email_inline" type="email" class="validate">
-                                        <label for="email_inline">Email</label>
-                                        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
-                                    </div>
-                                </div>
-                            </div>
+
                         </form>
+                    </div>
+                    <div id="register" class="col s12">
+                        {{ render(controller('App\\Controller\\RegisterController::register')) }}
+                    </div>
+                    </div>
+
+                </div>
+
+
+            <!-- modal 2!-->
+            <div id="modal2" class="modal">
+                <div class="modal-content">
+
+                    <div class="row">
+                        {{ render(controller('App\\Controller\\PostController::PostRegister')) }}
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+
                 </div>
             </div>
         {% endblock %}
@@ -132,8 +142,45 @@
 
             <script>
                 $(document).ready(function () {
-                    $('.modal').modal();
+                    $('.modal').modal({
+                        inDuration: 350,
+                        outDuration: 350,
+                        opacity: 0.3
+                    });
+                    $('.carousel.carousel-slider').carousel();
+                    $('.tabs').tabs();
                     $('.sidenav').sidenav();
+
+                    $('#Login').click(function() {
+
+
+
+
+                        event.preventDefault();
+                        let username = $('#username').val();
+                        let password = $('#password').val();
+
+
+                        let data = JSON.stringify({username: username, password: password});
+                        $.ajax({
+                            url: '/login_check',
+                            type: 'POST',
+                            contentType: "application/json",
+                            dataType: 'json',
+                            data: data,
+
+                            success: function (data, status) {
+                                alert('works');
+                                console.log("DATA", data);
+
+                            },
+                            error: function (data) {
+                                alert('not works');
+                                console.log("DATA", data);
+                            }
+                        });
+                    });
+
                 });
             </script>
         {% endblock %}

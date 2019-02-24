@@ -1,5 +1,5 @@
 html, body {height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 ::-webkit-scrollbar {
   width: 0px;  /* remove scrollbar space */
@@ -19,14 +19,3 @@ html, body {height: 100%;
   #a3 {height: 1680px;}
 }
 
-.container{
-  max-width: 620em;
-}
-.card{
-  max-height: 350px;
-  max-width: 200px;
-  img{
-    max-height: 200px;
-    max-width: 200px;
-  }
-}
