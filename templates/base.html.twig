@@ -172,7 +172,16 @@
                             success: function (data, status) {
                                 alert('works');
                                 console.log("DATA", data);
-
+                                $.ajax({
+                                    type: 'GET',
+                                    url: '/api',
+                                    contentType: 'json',
+                                    headers: {"Authorization": 'Bearer '+data.token},
+                                    success: function (data) {
+                                        alert('works again');
+                                        console.log("DATA", data);
+                                    }
+                                })
                             },
                             error: function (data) {
                                 alert('not works');
