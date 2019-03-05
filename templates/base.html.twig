@@ -60,7 +60,6 @@
                         {% for msg in app.flashes('notice') %}
                             <div class="center-align">
                                 <div class="card-panel teal lighten-2"><p class="white-text">{{ msg }}</p></div>
-
                             </div>
                         {% endfor %}
                     {% endif %}
@@ -97,20 +96,22 @@
                         </ul>
                     </div>
                     <div id="login" class="col s12">
-                        <form class="col s12">
+                        <form class="col s12" action="{{ path('security_login') }}" method="POST">
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input placeholder="Username" id="username" type="text" name="username" required="required" class="validate">
+                                    <input placeholder="Username" id="username" name="_username" type="text" required="required" class="validate">
                                     <label for="first_name">Username</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input id="password" type="password" class="validate" name="password" required="required">
+                                    <input d="password" name="_password" type="password" class="validate" required="required">
                                     <label for="password">Password</label>
                                 </div>
                             </div>
                             <div class="row right">
                                 <button id="Login" name="Login" class="btn-floating btn-large"><i class="material-icons">arrow_forward</i></button>
                             </div>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}">
 
                         </form>
                     </div>
@@ -151,44 +152,6 @@
                     $('.tabs').tabs();
                     $('.sidenav').sidenav();
 
-                    $('#Login').click(function() {
-
-
-
-
-                        event.preventDefault();
-                        let username = $('#username').val();
-                        let password = $('#password').val();
-
-
-                        let data = JSON.stringify({username: username, password: password});
-                        $.ajax({
-                            url: '/login_check',
-                            type: 'POST',
-                            contentType: "application/json",
-                            dataType: 'json',
-                            data: data,
-
-                            success: function (data, status) {
-                                alert('works');
-                                console.log("DATA", data);
-                                $.ajax({
-                                    type: 'GET',
-                                    url: '/api',
-                                    contentType: 'json',
-                                    headers: {"Authorization": 'Bearer '+data.token},
-                                    success: function (data) {
-                                        alert('works again');
-                                        console.log("DATA", data);
-                                    }
-                                })
-                            },
-                            error: function (data) {
-                                alert('not works');
-                                console.log("DATA", data);
-                            }
-                        });
-                    });
 
                 });
             </script>

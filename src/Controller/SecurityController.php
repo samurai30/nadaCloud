@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * Class SecurityController
@@ -14,14 +15,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class SecurityController extends AbstractController
 {
 
-    public function api(){
-        return new Response($this->getUser()->getEmail());
+    /**
+     * @Route("/login", name="security_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function login(AuthenticationUtils $authenticationUtils)
+    {
+        return $this->render('security/index.html.twig', [
+            'lastusername' => $authenticationUtils->getLastUsername(),
+            'error' => $authenticationUtils->getLastAuthenticationError()
+        ]);
     }
 
     /**
-     * @Route("/securityLogout",name="security_logout")
+     * @Route("/logout", name="security_logout")
      */
-    public function logout(){
-
-    }
+     public function logout(){}
 }
