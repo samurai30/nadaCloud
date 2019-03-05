@@ -62,7 +62,13 @@
                                 <div class="card-panel teal lighten-2"><p class="white-text">{{ msg }}</p></div>
                             </div>
                         {% endfor %}
+
                     {% endif %}
+                    {% for msg in app.flashes('registered') %}
+                        <div class="center-align">
+                            <div class="card-panel amber lighten-2"><p class="white-text">{{ msg }}</p></div>
+                        </div>
+                    {% endfor %}
                     <div class="section">
                         <div class="row">
                             <div class="col m8 s12 offset-m2">
@@ -87,6 +93,7 @@
 
         {% block modal %}
             <!-- modal 1!-->
+
             <div id="modal1" class="modal">
                 <div class="modal-content">
                     <div class="row">
@@ -99,12 +106,18 @@
                         <form class="col s12" action="{{ path('security_login') }}" method="POST">
                             <div class="row">
                                 <div class="input-field col s12">
+
                                     <input placeholder="Username" id="username" name="_username" type="text" required="required" class="validate">
                                     <label for="first_name">Username</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input d="password" name="_password" type="password" class="validate" required="required">
+                                    <input placeholder="password" name="_password" type="password" class="validate" required="required">
                                     <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div class="row center">
+                                <div id="errorMessageLogin">
+
                                 </div>
                             </div>
                             <div class="row right">
@@ -143,11 +156,25 @@
 
             <script>
                 $(document).ready(function () {
+
                     $('.modal').modal({
                         inDuration: 350,
                         outDuration: 350,
                         opacity: 0.3
                     });
+                    {% if error %}
+                     var t = "{{ error.messageKey|trans(error.messageData, 'security') }}";
+                     console.log("error message"+t);
+                    if (t) {
+                        $('#errorMessageLogin').append("<p class='amber-text text-accent-4 '>"+t+"</p>");
+                        $('#modal1').modal('open');
+
+                    }
+
+                    {% endif %}
+
+
+
                     $('.carousel.carousel-slider').carousel();
                     $('.tabs').tabs();
                     $('.sidenav').sidenav();

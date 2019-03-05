@@ -7,11 +7,26 @@ use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController extends AbstractController
 {
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
+
+    /**
+     * RegisterController constructor.
+     * @param FlashBagInterface $flashBag
+     */
+    public function __construct(FlashBagInterface $flashBag)
+    {
+        $this->flashBag = $flashBag;
+    }
+
     /**
      * @Route("/register", name="register")
      * @param UserPasswordEncoderInterface $encoder
@@ -24,7 +39,6 @@ class RegisterController extends AbstractController
         $form = $this->createForm(UserType::class,$user,[
             'action' => $this->generateUrl('register')
         ]);
-
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
@@ -42,6 +56,7 @@ class RegisterController extends AbstractController
         $entiyMan = $this->getDoctrine()->getManager();
         $entiyMan->persist($user);
         $entiyMan->flush();
+        $this->flashBag->add('registered', 'REGISTERED PLEASE LOGIN');
         return $this->redirectToRoute('default_index');
         }
 

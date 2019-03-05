@@ -5,3 +5,4 @@ twig:
     globals:
         profile_pic_path: "UserProfile/"
         post_images_path: "UserPosts/"
+        error: ""
