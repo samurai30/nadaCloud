@@ -96,4 +96,20 @@ class PostController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/deletePost/{id}", name="deletePost")
+     * @param Post $post
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deletePost(Post $post){
+       $em= $this->getDoctrine()->getManager();
+       $em->remove($post);
+       $em->flush();
+
+        $this->flashBag->add('notice', 'Post Delete');
+
+        return $this->redirectToRoute('default_index');
+    }
+
 }

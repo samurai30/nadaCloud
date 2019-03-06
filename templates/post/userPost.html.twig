@@ -1,7 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container">
+
+    <div class="section">
+        <div class="row">
+            <div class="col m10 s12 offset-m1">
     {% for post in posts %}
-        <h3> {{ post.title }}</h3>
+
+
+
+
+        <div class="col s12 m8 offset-m2">
+            <div class="z-depth-1 deep-orange lighten-1 white-text" style="font-weight: bold; padding: 20px; margin-top: 10px ">
+                <div class="container">
+                    <h5 > {{ post.title }}</h5>
+                    <hr>
+                    <div class="right-align">
+                        <a href="{{ path('deletePost', {'id': post.id }) }}" class="amber-text darken-4"><i class="material-icons">delete</i></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
     {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
 {% endblock %}

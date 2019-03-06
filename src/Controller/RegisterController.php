@@ -59,6 +59,10 @@ class RegisterController extends AbstractController
         $this->flashBag->add('registered', 'REGISTERED PLEASE LOGIN');
         return $this->redirectToRoute('default_index');
         }
+        if($form->isSubmitted()){
+            $this->flashBag->add('registered', 'SOMETHING WENT WRONG PLEASE TRY AGAIN');
+            return $this->redirectToRoute('default_index');
+        }
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
